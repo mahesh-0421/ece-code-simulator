@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECE Code Simulator — Online MATLAB & Verilog Simulation Platform</title>
+  <meta name="description" content="Online ECE simulation platform for GNU Octave (MATLAB-compatible) and Icarus Verilog HDL. Write code, simulate circuits, and view digital waveforms and plots without installing software.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CodeMirror Editor CDN (with local fallback) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/nord.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/eclipse.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       NAVIGATION BAR
+       ========================================================= -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <span class="brand-title">ECE Code Simulator</span>
+          <span class="brand-tag">Online MATLAB & Verilog</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#ide" class="nav-link">Simulator IDE</a>
+        <a href="#examples" class="nav-link">Examples & Tutorials</a>
+        <a href="#docs" class="nav-link">Help & Docs</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="btn-icon" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <a href="#ide" class="btn btn-primary btn-sm">Start Coding</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       HERO / HOME SECTION
+       ========================================================= -->
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+      <div class="badge-pill">
+        <span class="pulse-dot"></span> Cloud Engineering Simulator &bull; Zero Local Setup Required
+      </div>
+      <h1 class="hero-title">
+        Simulate <span class="gradient-text">MATLAB</span> & <span class="gradient-text-alt">Verilog</span> Anywhere
+      </h1>
+      <p class="hero-subtitle">
+        An online engineering simulation platform designed for ECE students, teachers, and researchers.
+        Compile IEEE Verilog designs and execute GNU Octave scientific computing scripts with live digital waveforms and publication-ready graphs directly in your browser.
+      </p>
+      
+      <div class="hero-buttons">
+        <a href="#ide" class="btn btn-primary btn-lg" onclick="setLanguageMode('verilog')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Launch Verilog IDE
+        </a>
+        <a href="#ide" class="btn btn-secondary btn-lg" onclick="setLanguageMode('matlab')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Launch MATLAB/Octave
+        </a>
+        <a href="#examples" class="btn btn-ghost btn-lg">Explore Examples</a>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon verilog-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+          </div>
+          <h3>Icarus Verilog Simulation</h3>
+          <p>Full IEEE 1364/2012 syntax compilation using <code>iverilog</code> and simulation via <code>vvp</code>. Automatically generates and visualizes VCD digital timing waveforms with bus transitions.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon matlab-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>MATLAB-Compatible Octave</h3>
+          <p>Powered by GNU Octave for matrix algebra, linear systems, signal processing (FFT), filter design, and differential equations. Interactive curve rendering and plot exports.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon cloud-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Isolated Sandbox Security</h3>
+          <p>Runs in an unprivileged, isolated backend container. Features CPU/RAM resource limits, 10-second timeouts, per-execution temporary workspaces, and DoS rate limiting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SIMULATOR IDE SECTION
+       ========================================================= -->
+  <section id="ide" class="ide-section">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <h2>Online Simulation IDE</h2>
+        <p>Write your Verilog HDL design or MATLAB/Octave script and run simulations in real time.</p>
+      </div>
+      <div id="engineStatusBanner" class="engine-badge">
+        <span class="status-indicator-dot online"></span>
+        <span id="engineStatusText">Backend Online: Verilog &amp; GNU Octave Ready</span>
+      </div>
+    </div>
+
+    <!-- IDE Container -->
+    <div class="ide-container">
+      
+      <!-- Editor Panel (Left / Top) -->
+      <div class="ide-panel editor-panel">
+        <div class="panel-toolbar">
+          <div class="toolbar-group">
+            <label for="languageSelect" class="toolbar-label">Language:</label>
+            <select id="languageSelect" class="form-select">
+              <option value="verilog">Verilog HDL (iverilog)</option>
+              <option value="matlab">MATLAB / Octave (GNU Octave)</option>
+            </select>
+
+            <label for="quickExampleSelect" class="toolbar-label">Template:</label>
+            <select id="quickExampleSelect" class="form-select">
+              <option value="">-- Choose Example Template --</option>
+              <optgroup label="Verilog Examples">
+                <option value="v_and">AND Gate &amp; Testbench</option>
+                <option value="v_or">OR Gate &amp; Testbench</option>
+                <option value="v_half_adder">Half Adder &amp; Testbench</option>
+                <option value="v_full_adder">Full Adder &amp; Testbench</option>
+                <option value="v_mux41">4-to-1 Multiplexer</option>
+                <option value="v_dff">D Flip-Flop with Reset</option>
+                <option value="v_counter">4-Bit Binary Counter</option>
+              </optgroup>
+              <optgroup label="MATLAB / Octave Examples">
+                <option value="m_matrix">Matrix Algebra &amp; Inversion</option>
+                <option value="m_sine">Sine Wave &amp; Harmonics Plot</option>
+                <option value="m_fft">Fast Fourier Transform (FFT)</option>
+                <option value="m_rc">RC Low-Pass Filter (Bode)</option>
+                <option value="m_step">Second-Order Damped Step</option>
+                <option value="m_ode">ODE Differential Equation</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="toolbar-actions">
+            <button id="runBtn" class="btn btn-success" title="Run Simulation (Ctrl+Enter)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Run Simulation</span>
+            </button>
+            <button id="resetBtn" class="btn btn-secondary btn-icon-only" title="Reset to template">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+            <button id="copyCodeBtn" class="btn btn-secondary btn-icon-only" title="Copy code">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button id="clearBtn" class="btn btn-danger btn-icon-only" title="Clear editor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- CodeMirror Editor / Fallback Textarea -->
+        <div class="editor-wrapper">
+          <textarea id="codeEditor" spellcheck="false" placeholder="Type or paste your code here..."></textarea>
+        </div>
+
+        <div class="editor-footer">
+          <span id="editorInfo">Lines: <span id="lineCount">0</span> &bull; Characters: <span id="charCount">0</span></span>
+          <span class="shortcut-tip">Tip: Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run</span>
+        </div>
+      </div>
+
+      <!-- Results & Output Panel (Right / Bottom) -->
+      <div class="ide-panel output-panel">
+        
+        <!-- Output Navigation Tabs -->
+        <div class="output-tabs">
+          <button class="tab-btn active" data-tab="tab-console">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            Console Output
+          </button>
+          <button class="tab-btn" data-tab="tab-waveform">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Waveforms <span id="waveformBadge" class="tab-count">0</span>
+          </button>
+          <button class="tab-btn" data-tab="tab-plots">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Plots &amp; Graphs <span id="plotsBadge" class="tab-count">0</span>
+          </button>
+          <button class="tab-btn" data-tab="tab-schematic">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Schematic
+          </button>
+          <button class="tab-btn" data-tab="tab-raw">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Raw VCD
+          </button>
+        </div>
+
+        <!-- Output Header / Status -->
+        <div class="output-status-bar">
+          <div class="status-left">
+            <span id="execBadge" class="status-pill status-ready">Ready</span>
+            <span id="execTime" class="exec-time">Execution Time: --</span>
+          </div>
+          <div class="status-right">
+            <button id="copyOutputBtn" class="btn btn-sm btn-ghost" title="Copy console output">Copy Output</button>
+            <button id="downloadResultBtn" class="btn btn-sm btn-ghost" title="Download current results">Download</button>
+          </div>
+        </div>
+
+        <!-- Tab 1: Console Output -->
+        <div id="tab-console" class="tab-content active">
+          <pre id="consoleOutput" class="terminal-view">Ready. Choose a language, write or load an example, and click "Run Simulation".</pre>
+        </div>
+
+        <!-- Tab 2: Digital Waveforms -->
+        <div id="tab-waveform" class="tab-content">
+          <div class="waveform-toolbar">
+            <div class="wave-controls">
+              <button id="zoomInBtn" class="btn btn-xs btn-secondary" title="Zoom In (+)">Zoom +</button>
+              <button id="zoomOutBtn" class="btn btn-xs btn-secondary" title="Zoom Out (-)">Zoom -</button>
+              <button id="zoomResetBtn" class="btn btn-xs btn-secondary" title="Reset Zoom">Reset</button>
+            </div>
+            <span id="waveInfo" class="wave-info-text">No waveform loaded</span>
+            <button id="downloadWaveSvgBtn" class="btn btn-xs btn-primary">Download SVG</button>
+          </div>
+          <div id="waveformContainer" class="waveform-display">
+            <div class="empty-placeholder">
+              <div class="placeholder-icon">📈</div>
+              <h4>No Waveforms Yet</h4>
+              <p>Run a Verilog simulation with testbench delays or a MATLAB script to see signals here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Plots & Graphs -->
+        <div id="tab-plots" class="tab-content">
+          <div class="plots-toolbar">
+            <span id="plotsInfo" class="plots-info-text">No plots generated</span>
+            <button id="downloadPlotBtn" class="btn btn-xs btn-primary" style="display:none;">Download Plot</button>
+          </div>
+          <div id="plotsContainer" class="plots-display">
+            <div class="empty-placeholder">
+              <div class="placeholder-icon">📊</div>
+              <h4>No Graphical Plots Yet</h4>
+              <p>Execute MATLAB/Octave code with <code>plot(t, y)</code> to generate interactive scientific curves.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Schematic -->
+        <div id="tab-schematic" class="tab-content">
+          <div class="schematic-toolbar">
+            <span>Gate-Level RTL Schematic Representation</span>
+          </div>
+          <div id="schematicContainer" class="schematic-display">
+            <div class="empty-placeholder">
+              <div class="placeholder-icon">🔲</div>
+              <h4>No Schematic Available</h4>
+              <p>Compile a Verilog module with logic assignments (AND, OR, XOR, MUX) to visualize the gate schematic.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Raw VCD -->
+        <div id="tab-raw" class="tab-content">
+          <div class="raw-toolbar">
+            <span>Value Change Dump (VCD) Header &amp; Transition Trace</span>
+            <button id="downloadVcdBtn" class="btn btn-xs btn-primary" style="display:none;">Download VCD File</button>
+          </div>
+          <pre id="rawVcdOutput" class="terminal-view">No VCD data recorded.</pre>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       EXAMPLES & TUTORIALS SECTION
+       ========================================================= -->
+  <section id="examples" class="examples-section">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <h2>Examples &amp; Tutorials</h2>
+        <p>Explore production-grade templates for Verilog digital logic and MATLAB scientific computation.</p>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All Examples</button>
+        <button class="filter-btn" data-filter="verilog">Verilog Digital HDL</button>
+        <button class="filter-btn" data-filter="matlab">MATLAB / Octave</button>
+      </div>
+    </div>
+
+    <div class="examples-grid">
+      <!-- Verilog Example 1: AND Gate -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>Basic 2-Input AND Gate</h3>
+        <p>Fundamental combinational logic gate demonstrating continuous assignment <code>assign y = a &amp; b</code> and comprehensive 4-state testbench stimulus.</p>
+        <div class="code-preview">
+          <code>assign y = a &amp; b;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_and')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 2: OR Gate -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>2-Input OR Gate</h3>
+        <p>Combinational logic implementing logical OR operation with testbench verifying all input combinations (00, 01, 10, 11).</p>
+        <div class="code-preview">
+          <code>assign y = a | b;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_or')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 3: Half Adder -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>1-Bit Half Adder</h3>
+        <p>Calculates the sum (XOR gate) and carry (AND gate) of two single-bit binary inputs. Crucial foundation for digital arithmetic.</p>
+        <div class="code-preview">
+          <code>assign sum = a ^ b; assign carry = a &amp; b;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_half_adder')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 4: Full Adder -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>1-Bit Full Adder with Carry-In</h3>
+        <p>Complete 1-bit binary adder with carry-in and carry-out. Demonstrates hierarchical design and arithmetic carry propagation.</p>
+        <div class="code-preview">
+          <code>assign {cout, sum} = a + b + cin;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_full_adder')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 5: Multiplexer -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>4-to-1 Multiplexer (MUX)</h3>
+        <p>Data selector routing one of four inputs to a single output line based on a 2-bit selection bus using conditional operators.</p>
+        <div class="code-preview">
+          <code>assign y = (sel == 2'b00) ? in[0] : ...</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_mux41')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 6: D Flip-Flop -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>D Flip-Flop with Async Reset</h3>
+        <p>Edge-triggered sequential memory element with active-high asynchronous reset. Illustrates clock generation in testbenches.</p>
+        <div class="code-preview">
+          <code>always @(posedge clk or posedge rst)</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_dff')">Load in Editor</button>
+      </div>
+
+      <!-- Verilog Example 7: Counter -->
+      <div class="card example-card" data-category="verilog">
+        <div class="card-badge verilog">Verilog HDL</div>
+        <h3>4-Bit Synchronous Binary Counter</h3>
+        <p>Sequential 4-bit up-counter with enable, clear, and rollover. Generates multi-bit waveform buses in the VCD timing viewer.</p>
+        <div class="code-preview">
+          <code>count &lt;= count + 1'b1;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('v_counter')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 1: Matrix Inversion -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>Matrix Algebra &amp; Inversion</h3>
+        <p>Computes determinant, trace, eigenvalues, and inverse of square matrices. Solves linear systems \(Ax = b\) using Gaussian elimination.</p>
+        <div class="code-preview">
+          <code>A_inv = inv(A); [V, D] = eig(A);</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_matrix')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 2: Sine Wave Plot -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>Sine Wave &amp; Harmonics Plot</h3>
+        <p>Generates harmonic sinusoidal waveforms and plots time-domain curves with custom line styles, titles, legends, and grid.</p>
+        <div class="code-preview">
+          <code>plot(t, y1, 'r-', t, y2, 'b--'); grid on;</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_sine')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 3: FFT -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>Fast Fourier Transform (FFT)</h3>
+        <p>Transforms time-domain signal containing composite frequency tones into single-sided amplitude frequency spectrum.</p>
+        <div class="code-preview">
+          <code>Y = fft(x); P2 = abs(Y/L); P1 = P2(1:L/2+1);</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_fft')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 4: RC Low-Pass -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>RC Low-Pass Filter Frequency Response</h3>
+        <p>Analyzes transfer function \(H(j\omega) = 1 / (1 + j\omega RC)\), plotting magnitude (dB) and phase versus logarithmic frequency.</p>
+        <div class="code-preview">
+          <code>H = 1 ./ (1 + 1j * 2*pi*f * R * C);</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_rc')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 5: Step Response -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>Second-Order Damped Step Response</h3>
+        <p>Simulates underdamped, critically damped, and overdamped dynamic systems with damping ratio \(\zeta\) and natural frequency \(\omega_n\).</p>
+        <div class="code-preview">
+          <code>y = 1 - exp(-zeta*wn*t) .* ...</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_step')">Load in Editor</button>
+      </div>
+
+      <!-- MATLAB Example 6: ODE -->
+      <div class="card example-card" data-category="matlab">
+        <div class="card-badge matlab">MATLAB / Octave</div>
+        <h3>Numerical ODE Solution (Euler / RK)</h3>
+        <p>Solves ordinary differential equations numerically. Demonstrates transient response of an RLC electrical network.</p>
+        <div class="code-preview">
+          <code>dydt = @(t, y) [-R/L * y(1) - 1/(L*C) * y(2); y(1)];</code>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSelectedExample('m_ode')">Load in Editor</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       HELP & DOCUMENTATION SECTION
+       ========================================================= -->
+  <section id="docs" class="docs-section">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <h2>Help &amp; Documentation</h2>
+        <p>Essential guide to writing code, running simulations, and interpreting results.</p>
+      </div>
+    </div>
+
+    <div class="docs-grid">
+      <div class="doc-card">
+        <h3>Verilog Simulation Guidelines</h3>
+        <ul>
+          <li><strong>Testbenches:</strong> Verilog requires a testbench module (e.g., <code>module tb; ... endmodule</code>) with clock or stimulus signals to produce waveform transitions.</li>
+          <li><strong>Waveform Recording:</strong> Use <code>$dumpfile("dump.vcd");</code> and <code>$dumpvars(0, tb);</code> inside an <code>initial begin ... end</code> block. The platform also automatically injects this if omitted!</li>
+          <li><strong>Termination:</strong> Always terminate your testbench execution with <code>#time $finish;</code> to avoid execution timeouts.</li>
+          <li><strong>Standard:</strong> Compiled with <code>iverilog -g2012</code> supporting IEEE Verilog 2001 and 2012 syntax extensions.</li>
+        </ul>
+      </div>
+
+      <div class="doc-card">
+        <h3>MATLAB / GNU Octave Guidelines</h3>
+        <ul>
+          <li><strong>Compatibility:</strong> GNU Octave is a high-level language primarily intended for numerical computations, highly compatible with MATLAB scripts.</li>
+          <li><strong>Plotting:</strong> Call <code>plot(x, y)</code>, <code>title('...')</code>, <code>xlabel('...')</code>, and <code>grid on</code>. The simulator automatically renders interactive charts and extracts line curves.</li>
+          <li><strong>Waveform Variables:</strong> If variables <code>t</code> and <code>y</code> exist in your script, they are automatically parsed into the waveform visualizer.</li>
+          <li><strong>Toolboxes:</strong> Octave provides built-in core linear algebra, signal processing, and numerical solvers. Proprietary MATLAB toolboxes (e.g. Simulink) are not included.</li>
+        </ul>
+      </div>
+
+      <div class="doc-card">
+        <h3>Troubleshooting Common Errors</h3>
+        <ul>
+          <li><strong>Syntax Error / Unterminated String:</strong> Check for missing semicolons (<code>;</code>) in Verilog or unclosed quotes.</li>
+          <li><strong>Simulation Timed Out:</strong> If your Verilog testbench lacks <code>$finish;</code> or includes an infinite <code>forever</code> loop, the 10s safety timeout terminates the process.</li>
+          <li><strong>Matrix Dimension Mismatch:</strong> In Octave, ensure matrix inner dimensions agree for multiplication (<code>*</code>) or use element-wise operators (<code>.*</code>, <code>./</code>).</li>
+          <li><strong>Security Restriction:</strong> Shell command calls (<code>system</code>, <code>unix</code>, <code>dos</code>) are disabled for sandbox safety.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ABOUT SECTION
+       ========================================================= -->
+  <section id="about" class="about-section">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <h2>About ECE Code Simulator</h2>
+        <p>Bridging the gap between engineering theory and browser-based hands-on practice.</p>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          <strong>ECE Code Simulator</strong> is an open educational platform engineered to provide instant, zero-configuration access to core Electrical and Computer Engineering simulation tools.
+        </p>
+        <p>
+          Commercial engineering software suites often require multi-gigabyte downloads, strict licensing, and high-performance workstations. This creates barriers for students and self-learners globally. ECE Code Simulator solves this by executing simulations on secure cloud infrastructure and rendering timing waveforms and mathematical plots directly in standard web browsers on any computer, tablet, or phone.
+        </p>
+        <div class="tech-stack-row">
+          <span class="tech-pill">Node.js 22</span>
+          <span class="tech-pill">Express REST API</span>
+          <span class="tech-pill">Icarus Verilog</span>
+          <span class="tech-pill">GNU Octave</span>
+          <span class="tech-pill">VCD Waveform Parser</span>
+          <span class="tech-pill">Docker Containerized</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ ECE Code Simulator</span>
+        <p>Open online simulation platform for Electrical &amp; Computer Engineering education.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#ide">Simulator IDE</a>
+        <a href="#examples">Examples</a>
+        <a href="#docs">Documentation</a>
+        <a href="/health" target="_blank">System Health</a>
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 ECE Code Simulator. Educational Open Source Platform.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CodeMirror CDN Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/verilog/verilog.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/octave/octave.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+
+  <script src="examples.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

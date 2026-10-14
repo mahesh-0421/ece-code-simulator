@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: ece-code-simulator
+    runtime: docker
+    plan: free
+    healthCheckPath: /health

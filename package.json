@@ -1,0 +1,13 @@
+{
+  "name": "ece-code-simulator",
+  "version": "2.0.0",
+  "description": "ECE Verilog and MATLAB/Octave Code Simulator",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
